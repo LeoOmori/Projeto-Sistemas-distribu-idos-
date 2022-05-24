@@ -16,5 +16,6 @@
 
 ## Funcionalidades:
 - Buscar piadas em um banco de piadas (filtrar e ordenar)
+  - Filtragem por (ranking, data, palavra-chave, quantidade de palavras)   
 - Salvar piadas
 - Ranquear piadas
