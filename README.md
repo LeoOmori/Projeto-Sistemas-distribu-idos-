@@ -25,7 +25,7 @@ instalar dependências:
   asyncio
   nats
   
-Comandos para rodas
+Comandos para rodar
   
 ```
 pip install asyncpraw
