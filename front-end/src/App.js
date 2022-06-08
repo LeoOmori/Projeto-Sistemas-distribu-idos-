@@ -16,7 +16,6 @@ import "antd/dist/antd.css";
 const { Title, Link } = Typography;
 const { Search } = Input;
 
-
 function App() {
   const data = Array.from({
     length: 23,
@@ -61,33 +60,44 @@ function App() {
     <Search
       enterButton="Go"
       size="large"
-      style={{ marginTop: 3, alignSelf: "center", maxWidth: "300px" }}
-      onSearch={(username) => login(username)}
+      style={{ marginTop: 3, alignSelf: "center", width: "600px" }}
+      onSearch={null}
     />
   );
 
-  const userName = (username) => (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Title level={3} style={{ marginTop: 10, alignSelf: "center" }}>
-        {username}
-      </Title>
-      <Button
-        size="large"
-        type="link"
-        style={{ marginLeft: 10 }}
-        onClick={logout}
-        icon={<LogoutOutlined />}
-      >
-        Logout
-      </Button>
-    </div>
-  );
+  const userName = (username) =>
+    user ? (
+      <>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Title
+            level={3}
+            style={{
+              marginLeft: 10,
+              marginTop: 10,
+              alignSelf: "center",
+              color: "#00678c",
+            }}
+          >
+            Welcome {username}!
+          </Title>
+          <Button
+            size="large"
+            type="link"
+            style={{ marginLeft: 10 }}
+            onClick={logout}
+            icon={<LogoutOutlined />}
+          >
+            Logout
+          </Button>
+        </div>
+      </>
+    ) : null;
 
   const list = () => (
     <List
@@ -124,7 +134,7 @@ function App() {
 
   useEffect(() => {
     const currentName = localStorage.getItem("username");
-    if (currentName || currentName ===!"") setUser(currentName);
+    if (currentName || currentName === !"") setUser(currentName);
   }, [user]);
 
   return (
@@ -136,9 +146,13 @@ function App() {
           flexDirection: "column",
           backgroundColor: "white",
           width: 850,
-          alignSelf: "center"
+          height: "100%",
+          alignSelf: "center",
         }}
       >
+        <header style={{ display: "flex", justifyContent: "end" }}>
+          {userName(user)}
+        </header>
         <img src={logo} className="App-logo" alt="logo" />
         <img
           src={jokehub}
@@ -153,7 +167,6 @@ function App() {
 
         {user ? (
           <>
-            {userName(user)}
             <div style={{ alignSelf: "center" }}>
               {inputJoke()}
               <div style={{ display: "flex", justifyContent: "center" }}>

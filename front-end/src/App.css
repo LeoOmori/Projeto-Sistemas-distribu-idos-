@@ -16,6 +16,7 @@
   background: repeating-linear-gradient(45deg, #00678c, #00678c 80px, #ffffff 80px, #ffffff 200px);
   display: flex;
   justify-content: center;
+  height: 100%;
 }
 
 @media (prefers-reduced-motion: no-preference) {
