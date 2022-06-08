@@ -12,10 +12,15 @@
   pointer-events: none;
   margin-top: 10px;
 }
+.App-body {
+  background: repeating-linear-gradient(45deg, #00678c, #00678c 80px, #ffffff 80px, #ffffff 200px);
+  display: flex;
+  justify-content: center;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 30s linear;
+    animation: App-logo-spin infinite 60s linear;
   }
 }
 
