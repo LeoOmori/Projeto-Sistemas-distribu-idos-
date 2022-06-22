@@ -11,7 +11,28 @@
 # Arquietura
 ![alt text](./arquitetura.png)
 
-## Como rodar 
+## Front end client
+https://www.figma.com/file/CQzJiFWNejofNgoTdzNWp3/Untitled?node-id=0%3A1
+
+## Como rodar
+
+## reddit-scrapepr
+
+Esse serviço tem como objectivo fazer um scraping dos subredits /jokes e /oneliners, e enviar esses dados para o tópico 'jokes' do nats. A linguagem implementada nesse projeto foi o python.
+
+instalar dependências:
+  asyncpraw
+  asyncio
+  nats
+  
+Comandos para rodar
+  
+```
+pip install asyncpraw
+pip install asyncio
+pip install nats
+python reddit-scrapper/main.py
+```
 
 
 ## Funcionalidades:
