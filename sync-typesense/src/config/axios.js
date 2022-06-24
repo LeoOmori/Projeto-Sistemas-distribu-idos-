@@ -1,6 +1,6 @@
 import axios from 'axios';
 import typesense from './typesense.js';
-
+// configuração padrão do axios com autenticação para as requisições com o typesense
 const {
     baseUrl: url,
     key,
