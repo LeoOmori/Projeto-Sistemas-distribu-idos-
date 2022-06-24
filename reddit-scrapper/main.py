@@ -34,7 +34,6 @@ async def main():
             requestString = submission.title + "&/"+submission.selftext + "&/" + str(datetime.utcfromtimestamp(submission.created_utc)) + "&/" + submission.id
             print(requestString)
             #publish on the nats 'jokes' topic
-            sleep(2)    
             await nc.publish("jokes", requestString.encode())
         except asyncpraw.exceptions.PRAWException as e:
             pass
