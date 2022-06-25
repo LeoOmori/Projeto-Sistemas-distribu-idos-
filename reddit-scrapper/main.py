@@ -1,3 +1,10 @@
+"""
+    25/06/2022
+    Autores: Leonardo,Luan
+    Script feito para escutar os subreddits /onelines e /jokers, mandando as piadas capturadas para o tópico 
+    'jokes' no servidor nats
+"""
+
 from time import sleep
 import asyncpraw
 import os
@@ -12,6 +19,7 @@ from dotenv import load_dotenv
 
 async def main():
 
+    #Load dotenv
     load_dotenv()
 
     #get env variables

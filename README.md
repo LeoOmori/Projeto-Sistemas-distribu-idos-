@@ -38,6 +38,7 @@ Comandos para rodar
 pip install asyncpraw
 pip install asyncio
 pip install nats-py
+pip install python-dotenv
 python reddit-scrapper/main.py
 ```
 

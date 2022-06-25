@@ -24,6 +24,10 @@ const sub = nc.subscribe("jokes");
       id: data[3],
       joke: `${data[0]}\n${data[1]}`,
       date: data[2],
+      users_saved: [],
+      users_rated: [],
+      rating_average: 0,
+      rating_amount:0,
     };
 
     // aguarda a mensagem e insere a piada no typesense
@@ -34,4 +38,4 @@ const sub = nc.subscribe("jokes");
   }
 })();
 
-app.listen(port);
+app.listen(3002);

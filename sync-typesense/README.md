@@ -55,8 +55,9 @@ $ node src/index.js
         {"name": "id", "type": "string", "optional": false},
         {"name": "joke", "type": "string", "optional": false},
         {"name": "date", "type": "string", "optional": true},
-        {"name": "users", "type": "string[]", "optional": true},
-        {"name": "rating_average", "type": "int32", "optional": true},
+        {"name": "users_saved", "type": "string[]", "optional": true},
+        {"name": "users_rated", "type": "string[]", "optional": true},
+        {"name": "rating_average", "type": "float", "optional": true},
         {"name": "rating_amount", "type": "int32", "optional": true},
     ],
     "default_sorting": "date",
@@ -70,7 +71,7 @@ $ node src/index.js
     "id": "1",
     "joke": "joke content",
     "date": 1632229601, // data em que a piada foi publicada,
-    "ratind_average": 4, // média das avaliações da piada
+    "rating_average": 4, // média das avaliações da piada
     "rating_amount": 10, // quantidade de avaliações
 }
 ```

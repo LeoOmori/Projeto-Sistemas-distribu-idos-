@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import logo from "./imgs/joker.svg";
 import jokehub from "./imgs/jokehub.png";
 import "./App.css";
+import { listJokes, listUserSavedJokes, listTopJokes } from "./schemas";
+import {client} from './api'
 import { Input, Typography, Row, Button, Rate, List, Spin } from "antd";
-import { AudioOutlined, NodeExpandOutlined } from "@ant-design/icons";
 import {
   UserOutlined,
   LogoutOutlined,
-  LikeOutlined,
-  MessageOutlined,
-  StarOutlined,
 } from "@ant-design/icons";
 import "antd/dist/antd.css";
+
+import { JokeList } from "./components/jokeList";
 
 const { Title, Link } = Typography;
 const { Search } = Input;
@@ -112,54 +112,66 @@ function App() {
       </>
     ) : null;
 
-  const list = () => (
-    <List
-      style={{
-        width: 800,
-        alignSelf: "center",
-        marginTop: 20,
-        marginBottom: 30,
-      }}
-      itemLayout="vertical"
-      size="large"
-      pagination={{
-        onChange: (page) => {
-          console.log(page);
-        },
-        pageSize: 3,
-      }}
-      dataSource={data}
-      renderItem={(item) => (
-        <List.Item
-          // style={{ display: "flex", justifyContent: "end"}}
-          // key={item.title}
-          actions={[
-            <Button>Save joke</Button>,
-            <Button type="link">Rate joke</Button>,
-            <Rate allowHalf disabled defaultValue={2.5} />,
-          ]}
-        >
-          <List.Item.Meta title={<a href={item.href}>{item.title}</a>} />
-          {item.content}
-        </List.Item>
-        
-      )}
-    />
-  );
 
   useEffect(() => {
     const currentName = localStorage.getItem("username");
     if (currentName || currentName === !"") setUser(currentName);
   }, [user]);
 
+  const [jokes, setJokes] = useState([])
+
+  useEffect(() => {
+
+    (async function () {
+      const data = await client.collections('jokes').documents().search(listJokes)
+      const dataWithCurrentRate = data.hits.map(e => {
+        e.document.current_rate = e.document.rating_average;
+        return e;
+      })
+      setJokes(dataWithCurrentRate)
+      console.log(dataWithCurrentRate)
+    }());
+  
+  },[])
+
+  const openSavedJokes = async () => {
+    const data = await client.collections('jokes').documents().search(listUserSavedJokes(localStorage.getItem("username")))
+    const dataWithCurrentRate = data.hits.map(e => {
+      e.document.current_rate = e.document.rating_average;
+      return e;
+    })
+    setJokes(dataWithCurrentRate)
+  }
+
+  const getJokeList = async () => {
+    const data = await client.collections('jokes').documents().search(listJokes)
+
+    const dataWithCurrentRate = data.hits.map(e => {
+      e.document.current_rate = e.document.rating_average;
+      return e;
+    })
+    setJokes(dataWithCurrentRate)
+    console.log(dataWithCurrentRate)
+  }
+
+  const getTopJokes = async () => {
+    const data = await client.collections('jokes').documents().search(listTopJokes)
+
+    const dataWithCurrentRate = data.hits.map(e => {
+      e.document.current_rate = e.document.rating_average;
+      return e;
+    })
+    setJokes(dataWithCurrentRate)
+    console.log(dataWithCurrentRate)
+  }
+
+
   return (
-    <Spin tip="Loading..." spinning={loading}>
-      <body
+      <div
         className="App-body"
         style={{ height: user || user === !"" ? "100%" : "100vh" }}
       >
         <Row
-          className="App"
           style={{
             display: "flex",
             flexDirection: "column",
@@ -190,18 +202,18 @@ function App() {
               <div style={{ alignSelf: "center" }}>
                 {inputJoke()}
                 <div style={{ display: "flex", justifyContent: "center" }}>
-                  <Button type="link">My Jokes</Button>
-                  <Button type="link">All jokes</Button>
+                  <Button onClick={() => {openSavedJokes()}} type="link">My Jokes</Button>
+                  <Button onClick={() => {getJokeList()}} type="link">All jokes</Button>
+                  <Button onClick={() => {getTopJokes()}} type="link">Top 10 rated jokes</Button>
                 </div>
               </div>
-              {list()}
+              <JokeList setJokes={setJokes} data={jokes}/>
             </>
           ) : (
             inputUser()
           )}
         </Row>
-      </body>
-    </Spin>
+      </div>
   );
 }
 
