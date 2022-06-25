@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import logo from "./imgs/joker.svg";
 import jokehub from "./imgs/jokehub.png";
 import "./App.css";
-import { listJokes, listUserSavedJokes, listTopJokes } from "./schemas";
+import { listJokes, listUserSavedJokes, listTopJokes, searchJokes } from "./schemas";
 import {client} from './api'
-import { Input, Typography, Row, Button, Rate, List, Spin } from "antd";
+import { Input, Typography, Row, Button} from "antd";
 import {
   UserOutlined,
   LogoutOutlined,
@@ -29,7 +29,14 @@ function App() {
       "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.",
   }));
 
-  const onSearch = (value) => console.log(value);
+  const onSearch = async (joke) => {
+    const data = await client.collections('jokes').documents().search(searchJokes(joke))
+    const dataWithCurrentRate = data.hits.map(e => {
+      e.document.current_rate = e.document.rating_average;
+      return e;
+    })
+    setJokes(dataWithCurrentRate)
+  };
 
   const login = (username) => {
     setLoading(true);
@@ -74,7 +81,7 @@ function App() {
       size="large"
       allowClear
       style={{ marginTop: 3, alignSelf: "center", width: "600px" }}
-      onSearch={null}
+      onSearch={(joke) => {onSearch(joke)}}
     />
   );
 
@@ -119,6 +126,7 @@ function App() {
   }, [user]);
 
   const [jokes, setJokes] = useState([])
+
 
   useEffect(() => {
 
@@ -169,7 +177,7 @@ function App() {
   return (
       <div
         className="App-body"
-        style={{ height: user || user === !"" ? "100%" : "100vh" }}
+        style={{ height: user  ? "fitContent" : "fitContent" }}
       >
         <Row
           style={{
