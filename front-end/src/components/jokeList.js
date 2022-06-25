@@ -100,12 +100,11 @@ export const JokeList = ({ setJokes, data }) => {
             />,
           ]}
         >
-          {item.document.joke}
           <Text type="secondary">
-          {"  "}
           {` ${formatDate(item.document.date)}`}
-          {" "}
           </Text>
+          <br></br>
+          {item.document.joke}{' '}
           <Tag color="gold">
             {`  ${item.document.rating_average}/5: (${item.document.rating_amount} reviews) `}</Tag>
         </List.Item>
