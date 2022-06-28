@@ -20,12 +20,14 @@ export const JokeList = ({ setJokes, data }) => {
   const onRate = async (item) => {
     let newUpdate = item.document;
     newUpdate.users_rated.push(localStorage.getItem("username"));
-
+    
     // pegar a nova media de rating
-    newUpdate.rating_average =
-      (newUpdate.current_rate + newUpdate.rating_amount) /
+    const tempAverage = newUpdate.rating_amount || 1;
+    newUpdate.rating_average = ((tempAverage * newUpdate.rating_average) + newUpdate.current_rate) /
       newUpdate.users_rated.length;
     newUpdate.rating_amount = newUpdate.users_rated.length;
+    newUpdate.rating_average = parseFloat(newUpdate.rating_average.toFixed(1));
+
 
     await client.collections("jokes").documents(newUpdate.id).update(newUpdate);
     setJokes(
@@ -72,21 +74,11 @@ export const JokeList = ({ setJokes, data }) => {
             >
               Save joke{" "}
             </Button>,
-            <Button
-              onClick={() => {
-                onRate(item);
-              }}
-              disabled={item.document.users_rated.includes(
-                localStorage.getItem("username")
-              )}
-              type="link"
-            >
-              Rate joke
-            </Button>,
             <Rate
               disabled={item.document.users_rated.includes(
                 localStorage.getItem("username")
               )}
+              allowHalf
               value={item.document.current_rate}
               onChange={(e) => {
                 setJokes(
@@ -96,6 +88,7 @@ export const JokeList = ({ setJokes, data }) => {
                     return element;
                   })
                 );
+                onRate(item);
               }}
             />,
           ]}
