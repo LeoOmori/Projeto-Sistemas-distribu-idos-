@@ -19,7 +19,10 @@ export const JokeList = ({ setJokes, data }) => {
 
   const deleteItem = async (item) => {
     let newUpdate = item.document;
-    newUpdate.users_saved.splice(newUpdate.users_saved.indexOf(localStorage.getItem("username")), 1);
+    newUpdate.users_saved.splice(
+      newUpdate.users_saved.indexOf(localStorage.getItem("username")),
+      1
+    );
     await client.collections("jokes").documents(newUpdate.id).update(newUpdate);
     setJokes(
       data.map((e) => {
@@ -27,7 +30,7 @@ export const JokeList = ({ setJokes, data }) => {
         return e;
       })
     );
-  }
+  };
 
   const onRate = async (item) => {
     let newUpdate = item.document;
@@ -51,9 +54,19 @@ export const JokeList = ({ setJokes, data }) => {
   };
 
   const formatDate = (data) => {
-    const newDate = data.split(" ");
-    const year = newDate[0].split("-");
-    return `${newDate[1]} ${year[2]}/${year[1]}/${year[0]}`;
+    // eslint-disable-next-line no-extend-native
+    Date.prototype.addHours = function (value) {
+      this.setHours(this.getHours() + value);
+    };
+
+    const d = new Date(data);
+    // fixing timezone
+    d.addHours(-3);
+    const Minutes = d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();
+    const Hours = d.getHours() < 10 ? `0${d.getHours()}` : d.getHours();
+    const Days = d.getDate() < 10 ? `0${d.getDate()}` : d.getDate();
+    const Months = d.getMonth() < 10 ? `0${d.getMonth()}` : d.getMonth();
+    return `${Hours}:${Minutes} ${Days}/${Months}/${d.getFullYear()}`;
   };
 
   return (
@@ -80,9 +93,13 @@ export const JokeList = ({ setJokes, data }) => {
               {item.document.users_saved.includes(
                 localStorage.getItem("username")
               ) ? (
-                <Button danger type="text" onClick={() => {
-                  deleteItem(item);
-                }}>
+                <Button
+                  danger
+                  type="text"
+                  onClick={() => {
+                    deleteItem(item);
+                  }}
+                >
                   Remove
                 </Button>
               ) : null}
