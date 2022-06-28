@@ -18,16 +18,6 @@ const { Search } = Input;
 
 function App() {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  const data = Array.from({
-    length: 23,
-  }).map((_, i) => ({
-    href: "https://ant.design",
-    title: `ant design part ${i}`,
-    content:
-      "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.",
-  }));
 
   const onSearch = async (joke) => {
     const data = await client.collections('jokes').documents().search(searchJokes(joke))
@@ -39,17 +29,13 @@ function App() {
   };
 
   const login = (username) => {
-    setLoading(true);
     localStorage.setItem("username", username);
     setUser(username);
-    setLoading(false);
   };
 
   const logout = () => {
-    setLoading(true);
     localStorage.setItem("username", "");
     setUser(null);
-    setLoading(false);
     document.location.reload(true);
   };
 
@@ -209,10 +195,10 @@ function App() {
             <>
               <div style={{ alignSelf: "center" }}>
                 {inputJoke()}
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  <Button onClick={() => {openSavedJokes()}} type="link">My Jokes</Button>
-                  <Button onClick={() => {getJokeList()}} type="link">All jokes</Button>
-                  <Button onClick={() => {getTopJokes()}} type="link">Top 10 rated jokes</Button>
+                <div style={{ display: "flex", justifyContent: "center", marginTop: 6 }}>
+                  <Button onClick={() => {openSavedJokes()}} type="default">My Jokes</Button>
+                  <Button onClick={() => {getJokeList()}} type="default">All jokes</Button>
+                  <Button onClick={() => {getTopJokes()}} type="default">Top 10 rated jokes</Button>
                 </div>
               </div>
               <JokeList setJokes={setJokes} data={jokes}/>
