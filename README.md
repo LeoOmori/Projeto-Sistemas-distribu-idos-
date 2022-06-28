@@ -16,7 +16,7 @@
 - Docker
 
 ## **Arquietura**
-![alt text](./arquitetura.png)
+![image](https://user-images.githubusercontent.com/37680306/176293742-b0079165-dbd5-4f03-9c08-4f0af4c5eae4.png)
 
 ## Front end client
 https://www.figma.com/file/CQzJiFWNejofNgoTdzNWp3/Untitled?node-id=0%3A1
@@ -27,11 +27,9 @@ https://www.figma.com/file/CQzJiFWNejofNgoTdzNWp3/Untitled?node-id=0%3A1
 
 Esse serviço tem como objectivo fazer um scraping dos subredits /jokes e /oneliners, e enviar esses dados para o tópico 'jokes' do nats. A linguagem implementada nesse projeto foi o python.
 
-instalar dependências:
-  asyncpraw
-  asyncio
-  nats
-  
+Instale o Nats:
+https://nats.io/download/
+
 Comandos para rodar
   
 ```
