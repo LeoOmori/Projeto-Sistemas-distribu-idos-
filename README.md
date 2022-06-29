@@ -1,6 +1,6 @@
 # **Joke Hub**
 
-  O [Projeto] tem como objetivo criar um sistema distribúido onde os usuário poderão buscar, salvar e ranquear piadas de um banco de dados de piadas.
+  O Joke Hub é um sistema distribúido onde os usuário poderão buscar, salvar e ranquear piadas de um banco de dados que é sincronizado em tempo real por subreddits, mais de um /subrredit pode ser sincronizado.
   
 ## **Funcionalidades:**
 - Buscar piadas em um banco de dados sincronizado em tempo real com o reddit
