@@ -1,10 +1,10 @@
 # **Joke Hub**
 
-  O [Projeto] tem como objetivo criar um sistema distribúido os os usuário poderão buscar, salvar e ranquear piadas de um um banco de dados de piadas.
+  O [Projeto] tem como objetivo criar um sistema distribúido onde os usuário poderão buscar, salvar e ranquear piadas de um banco de dados de piadas.
   
 ## **Funcionalidades:**
-- Buscar piadas em um banco de piadas (filtrar e ordenar)
-  - Filtragem por [ranking, data, palavra-chave]   
+- Buscar piadas em um banco de dados sincronizado em tempo real com o reddit
+- Filtrar por melhor ranking
 - Salvar piadas
 - Ranquear piadas
 
@@ -25,7 +25,7 @@ https://www.figma.com/file/CQzJiFWNejofNgoTdzNWp3/Untitled?node-id=0%3A1
 
 ## **reddit-scrapepr**
 
-Esse serviço tem como objectivo fazer um scraping dos subredits /jokes e /oneliners, e enviar esses dados para o tópico 'jokes' do nats. A linguagem implementada nesse projeto foi o python.
+Esse serviço tem como objetivo fazer um scraping dos subredits /jokes e /oneliners, e enviar esses dados para o tópico 'jokes' do nats. A linguagem implementada nesse projeto foi o python.
 
 Instale o Nats:
 https://nats.io/download/
@@ -41,7 +41,7 @@ python reddit-scrapper/main.py
 ```
 
 ## **sync-typesense**
-O sync-typesense é uma aplicação que recebe mensagens do reddit scrapper através da ferramenta de messageria [nats](https://nats.io/), e syncroniza com o motor de busca [typesense](https://typesense.org/) inserindo cada mensagem no banco de dados gerenciado pelo próprio motor de busca, através de requisições http.
+O sync-typesense é uma aplicação que recebe mensagens do reddit scrapper através da ferramenta de messageria [nats](https://nats.io/), e sincroniza com o banco do [typesense](https://typesense.org/) que gerencia o armazenamento consistente e cuida das buscas através de requisições http.
 
 Navegue para o diretório sync-typesense
 ```
@@ -54,7 +54,7 @@ $ cd sync-typesense
 $ yarn install
 ```
 
-### Para realizar as funçôes do Sync Typesense é necessario seguir os seguintes passos:
+### Para realizar as funçôes do sync-typesense é necessario seguir os seguintes passos:
 
 Instale o Docker e docker-compose: [Docker](https://www.docker.com/get-started/),
  ou se preferir rodar o servidor localmente acesse [typesense](https://typesense.org/) para mais informações
